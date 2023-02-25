@@ -4,6 +4,8 @@
 #define NULL 0
 #endif
 
+using namespace std;
+
 /**
  * Node struct for both problems
  */
@@ -47,6 +49,7 @@ struct Node
  *   Pivot value
  *
  */
+void moveThrough(Node*& input);
 void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
 
 /**
@@ -76,15 +79,18 @@ Node* llfilter(Node* head, Comp pred);
 // Since template implementations should be in a header file, we will
 // implement the above function now.
 //*****************************************************************************
-
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred)
 {
-    //*********************************************
-    // Provide your implementation below
-    //*********************************************
-
-
+  if (head == NULL){
+	return head;
+  } else if (pred(head->val)){
+    Node* next = head->next;
+    delete head;
+    return llfilter(next, pred);
+  } else {
+    head->next = llfilter(head->next, pred);
+  }
 }
 
 #endif
